@@ -24,6 +24,7 @@ class Solution {
        
         //check we have only 2 cooordinates
         
+        
         if(length==2)
             return true;
         
