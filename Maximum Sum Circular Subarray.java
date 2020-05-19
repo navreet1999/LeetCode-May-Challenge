@@ -41,26 +41,40 @@ Note:
 
 */
 
-
 class Solution {
-    public int maxSubarraySumCircular(int[] A) {
-         if(A.length == 0) return 0;
-        int sum = A[0];
-        int maxSoFar = A[0];
-        int maxTotal = A[0];
-        int minTotal = A[0];
-        int minSoFar = A[0];
-        for(int i = 1; i < A.length; i++){
-            int num = A[i];
-            maxSoFar = Math.max(num, maxSoFar + num);
-            maxTotal = Math.max(maxSoFar, maxTotal);
-            
-            minSoFar = Math.min(num, minSoFar + num);
-            minTotal = Math.min(minTotal, minSoFar);
-            
-            sum += num;
+    public int Kadanes(int arr[])
+    {
+       int max=Integer.MIN_VALUE;
+        int sum=0;
+        for(int i=0;i<arr.length;i++)
+        {
+            if(sum+arr[i]>arr[i])
+                sum=sum+arr[i];
+            else
+                sum=arr[i];
+            if(max<sum)
+                max=sum;
         }
-        if(sum == minSoFar) return maxTotal;
-        return Math.max(sum - minTotal, maxTotal);
+        System.out.print(max);
+        return max;
+       
+    }
+    public int maxSubarraySumCircular(int[] A) {
+        
+       int K=Kadanes(A);
+         int circular_sum=0;
+         for(int i=0;i<A.length;i++)
+         {
+             circular_sum+=A[i];
+              A[i]=-A[i];
+         }
+        
+         int circular_total = circular_sum+ Kadanes(A);
+        
+         if(circular_total>K && circular_total!=0)
+             return circular_total;
+         else
+             return K;
+      //  return 0;
     }
 }
